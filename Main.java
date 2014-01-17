@@ -11,6 +11,7 @@ public class Main
 		System.out.println("Dexterity: "+ player1.getDexterity() + " --Expected Dexterity: 5");
 		System.out.println("Intellect: "+ player1.getIntellect() + " --Expected Intellect: 1");
 		System.out.println("Health: "+ player1.getHealth() + " --Expected 25");
+		System.out.println("Mana: "+ player1.getMana() + " --Expected 5");
 		
 		Player player2 = new Player("Thief");
 		System.out.println(player2.getJob());
@@ -18,6 +19,7 @@ public class Main
 		System.out.println("Dexterity: "+ player2.getDexterity() + " --Expected Dexterity: 10");
 		System.out.println("Intellect: "+ player2.getIntellect() + " --Expected Intellect: 1");
 		System.out.println("Health: "+ player2.getHealth() + " --Expected 15");
+		System.out.println("Mana: "+player2.getMana() + " --Expected 10");
 		
 		Player player3 = new Player("Wizard");
 		System.out.println(player3.getJob());
@@ -25,6 +27,7 @@ public class Main
 		System.out.println("Dexterity: "+ player3.getDexterity() + " --Expected Dexterity: 5");
 		System.out.println("Intellect: "+ player3.getIntellect() + " --Expected Intellect: 10");
 		System.out.println("Health: "+ player3.getHealth() + " --Expected 15");
+		System.out.println("Mana: "+ player3.getMana() + " --Expected 15");
 
 		
 	}

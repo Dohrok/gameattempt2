@@ -1,3 +1,5 @@
+import java.math.BigDecimal;
+
 
 public class Player
 {
@@ -15,12 +17,18 @@ public class Player
 	private final int BASEMANAKNIGHT = 5;
 	private final int BASEMANATHIEF = 10;
 	private final int BASEMANAWIZARD = 15;
+	
+	private final double BASECRITCHANCEKNIGHT = 125;
+	private final double BASECRITCHANCETHIEF = 250;
+	private final double BASECRITCHANCEWIZARD = 200;
+	
+	private final int MAXCRITAMOUNT = 2500;
 		
-	private String[] inventory = new String[15];
 	//for the equipment we're going to have an array, where depending on gear type
 	//it will assign it a specific index of the array
 	//Index 0 = Helmet, 1 = Weapon Slot, 2 = Weapon Slot, 3 = Armor, 4 = Armor, 5 = gloves, 6 = boots, 7 = belt, 8 = amulet
 	private String[] equipment = new String[9];
+	private String[] inventory = new String[15];
 	
 	public String job;
 	
@@ -30,6 +38,8 @@ public class Player
 	private int addedDexterity = 0;
 	private int addedStrength = 0;
 	private int level = 1;
+	
+	private int addedGearCritChance;
 	
 	//Base stat variables
 	private int baseStr;
@@ -45,6 +55,8 @@ public class Player
 	private int totalPhysicalDamage;
 	private int totalMagicDamage;
 	private int totalHealth;
+	private int totalMana;
+	private double totalCritChance;
 	
 	//Defensive Stats
 	private int baseEva;
@@ -53,6 +65,8 @@ public class Player
 	//Offensive stats
 	private int weaponPhysicalDamage;
 	private int weaponMagicDamage;
+	private double critAmount;
+	
 
 	
 	
@@ -67,7 +81,6 @@ public class Player
 		if(jobs.equals("Knight"))
 		{
 			setKnightClass();
-			System.out.println("Base HP Knight" + totalHealth);
 		}
 		
 		else if(jobs.equals("Thief"))
@@ -94,6 +107,7 @@ public class Player
 		setDexterity(5);
 		setIntellect(1);
 		setHealth("Knight");
+		setMana("Knight");
 		job = "Knight";
 	}
 	
@@ -103,6 +117,7 @@ public class Player
 		setDexterity(10);
 		setIntellect(1);
 		setHealth("Thief");
+		setMana("Thief");
 		job = "Thief";
 	}
 	
@@ -112,6 +127,7 @@ public class Player
 		setDexterity(5);
 		setIntellect(10);
 		setHealth("Wizard");
+		setMana("Wizard");
 		job = "Wizard";
 	}
 	
@@ -159,6 +175,28 @@ public class Player
 		return baseDex;
 	}
 	
+	public void setCritChance(Object job)
+	{
+		if(job.equals("Knight"))
+		{
+			totalCritChance = addedGearCritChance + BASECRITCHANCEKNIGHT;
+		}
+		else if(job.equals("Thief"))
+		{
+			totalCritChance = addedGearCritChance + BASECRITCHANCETHIEF;
+		}
+		else if(job.equals("Wizard"))
+		{
+			totalCritChance = addedGearCritChance + BASECRITCHANCEWIZARD;
+		}
+	}
+	
+	public double getCritChance()
+	{
+		double critChance = (totalCritChance / MAXCRITAMOUNT);
+		return critChance*100;
+	}
+	
 	
 	//Intellect Methods
 	public void setIntellect(int intellect)
@@ -192,23 +230,46 @@ public class Player
 	{
 		if(job.equals("Knight"))
 		{
-			totalHealth = ((BASEHPKNIGHT*level) + (addedVitality*6));
+			totalHealth = ((BASEHPKNIGHT*level) + (totalVitality*14));
 		}
 		
 		else if(job.equals("Thief"))
 		{
-			totalHealth = (BASEHPTHIEF*level) + (addedVitality*6);
+			totalHealth = (BASEHPTHIEF*level) + (totalVitality*14);
 		}
 		
 		else if(job.equals("Wizard"))
 		{
-			totalHealth = (BASEHPWIZARD*level) + (addedVitality*6);
+			totalHealth = (BASEHPWIZARD*level) + (totalVitality*14);
 		}
 	}
 	
 	public int getHealth()
 	{
 		return totalHealth;
+	}
+	
+	//Mana Methods
+	
+	public void setMana(Object job)
+	{
+		if(job.equals("Knight"))
+		{
+			totalMana = (BASEMANAKNIGHT*level) + (totalIntellect*8);
+		}
+		else if(job.equals("Thief"))
+		{
+			totalMana = (BASEMANATHIEF*level) + (totalIntellect*8);
+		}
+		else if(job.equals("Wizard"))
+		{
+			totalMana = (BASEMANAWIZARD*level) + (totalIntellect*8);
+		}
+	}
+	
+	public int getMana()
+	{
+		return totalMana;
 	}
 	
 	//Damage Methods *will be updated further with items
